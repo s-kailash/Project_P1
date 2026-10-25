@@ -6,6 +6,7 @@ export default defineConfig({
     include: ["tests/**/*.test.ts"],
     env: {
       DATABASE_URL: "postgresql://test:test@localhost:5432/test",
+      CORS_ORIGINS: "http://localhost:5173",
     },
   },
 });
