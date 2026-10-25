@@ -1,9 +1,15 @@
 import express from "express";
+import pinoHttp from "pino-http";
+import { logger } from "./utils/logger";
+import { router } from "./routes";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
 export const app = express();
 
-app.use(express.json());
+app.use(pinoHttp({ logger }));
+app.use(express.json({ limit: "1mb" }));
 
-app.get("/api/v1/health", (_req, res) => {
-  res.json({ status: "ok" });
-});
+app.use("/api/v1", router);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
